@@ -1,0 +1,98 @@
+{
+    "copyright": "Copyright 2026 MLB Advanced Media, L.P.  Use of any content on this page acknowledges agreement to the terms posted here http://gdx.mlb.com/components/copyright.txt",
+    "totalItems": 1,
+    "totalEvents": 0,
+    "totalGames": 1,
+    "totalGamesInProgress": 0,
+    "dates": [
+        {
+            "date": "2026-09-14",
+            "totalItems": 1,
+            "totalEvents": 0,
+            "totalGames": 1,
+            "totalGamesInProgress": 0,
+            "games": [
+                {
+                    "gamePk": 824465,
+                    "gameGuid": "20ac7e68-b0ab-40b1-a3fe-20b4d0cf6055",
+                    "link": "/api/v1.1/game/824465/feed/live",
+                    "gameType": "R",
+                    "season": "2026",
+                    "gameDate": "2026-09-14T22:40:00Z",
+                    "officialDate": "2026-09-14",
+                    "status": {
+                        "abstractGameState": "Final",
+                        "codedGameState": "F",
+                        "detailedState": "Final",
+                        "statusCode": "F",
+                        "startTimeTBD": false,
+                        "abstractGameCode": "F"
+                    },
+                    "teams": {
+                        "away": {
+                            "team": {
+                                "id": 119,
+                                "name": "Los Angeles Dodgers",
+                                "link": "/api/v1/teams/119"
+                            },
+                            "leagueRecord": {
+                                "wins": 91,
+                                "losses": 59,
+                                "ties": 0,
+                                "pct": ".607"
+                            },
+                            "score": 4,
+                            "isWinner": true,
+                            "splitSquad": false,
+                            "seriesNumber": 49
+                        },
+                        "home": {
+                            "team": {
+                                "id": 113,
+                                "name": "Cincinnati Reds",
+                                "link": "/api/v1/teams/113"
+                            },
+                            "leagueRecord": {
+                                "wins": 70,
+                                "losses": 80,
+                                "ties": 0,
+                                "pct": ".467"
+                            },
+                            "score": 1,
+                            "isWinner": false,
+                            "splitSquad": false,
+                            "seriesNumber": 49
+                        }
+                    },
+                    "venue": {
+                        "id": 2602,
+                        "name": "Great American Ball Park",
+                        "link": "/api/v1/venues/2602"
+                    },
+                    "content": {
+                        "link": "/api/v1/game/824465/content"
+                    },
+                    "isTie": false,
+                    "gameNumber": 1,
+                    "publicFacing": true,
+                    "doubleHeader": "N",
+                    "gamedayType": "P",
+                    "tiebreaker": "N",
+                    "calendarEventID": "14-824465-2026-09-14",
+                    "seasonDisplay": "2026",
+                    "dayNight": "night",
+                    "scheduledInnings": 9,
+                    "reverseHomeAwayStatus": false,
+                    "inningBreakLength": 120,
+                    "gamesInSeries": 4,
+                    "seriesGameNumber": 1,
+                    "seriesDescription": "Regular Season",
+                    "recordSource": "S",
+                    "ifNecessary": "N",
+                    "ifNecessaryDescription": "Normal Game"
+                }
+            ],
+            "events": []
+        }
+    ]
+}

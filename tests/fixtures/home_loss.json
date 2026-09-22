@@ -1,0 +1,98 @@
+{
+    "copyright": "Copyright 2026 MLB Advanced Media, L.P.  Use of any content on this page acknowledges agreement to the terms posted here http://gdx.mlb.com/components/copyright.txt",
+    "totalItems": 1,
+    "totalEvents": 0,
+    "totalGames": 1,
+    "totalGamesInProgress": 0,
+    "dates": [
+        {
+            "date": "2026-09-01",
+            "totalItems": 1,
+            "totalEvents": 0,
+            "totalGames": 1,
+            "totalGamesInProgress": 0,
+            "games": [
+                {
+                    "gamePk": 823908,
+                    "gameGuid": "221a6d5c-596a-424f-b822-23b1cf316f9e",
+                    "link": "/api/v1.1/game/823908/feed/live",
+                    "gameType": "R",
+                    "season": "2026",
+                    "gameDate": "2026-09-02T02:10:00Z",
+                    "officialDate": "2026-09-01",
+                    "status": {
+                        "abstractGameState": "Final",
+                        "codedGameState": "F",
+                        "detailedState": "Final",
+                        "statusCode": "F",
+                        "startTimeTBD": false,
+                        "abstractGameCode": "F"
+                    },
+                    "teams": {
+                        "away": {
+                            "team": {
+                                "id": 138,
+                                "name": "St. Louis Cardinals",
+                                "link": "/api/v1/teams/138"
+                            },
+                            "leagueRecord": {
+                                "wins": 69,
+                                "losses": 70,
+                                "ties": 0,
+                                "pct": ".496"
+                            },
+                            "score": 13,
+                            "isWinner": true,
+                            "splitSquad": false,
+                            "seriesNumber": 46
+                        },
+                        "home": {
+                            "team": {
+                                "id": 119,
+                                "name": "Los Angeles Dodgers",
+                                "link": "/api/v1/teams/119"
+                            },
+                            "leagueRecord": {
+                                "wins": 82,
+                                "losses": 56,
+                                "ties": 0,
+                                "pct": ".594"
+                            },
+                            "score": 8,
+                            "isWinner": false,
+                            "splitSquad": false,
+                            "seriesNumber": 45
+                        }
+                    },
+                    "venue": {
+                        "id": 22,
+                        "name": "UNIQLO Field at Dodger Stadium",
+                        "link": "/api/v1/venues/22"
+                    },
+                    "content": {
+                        "link": "/api/v1/game/823908/content"
+                    },
+                    "isTie": false,
+                    "gameNumber": 1,
+                    "publicFacing": true,
+                    "doubleHeader": "N",
+                    "gamedayType": "P",
+                    "tiebreaker": "N",
+                    "calendarEventID": "14-823908-2026-09-01",
+                    "seasonDisplay": "2026",
+                    "dayNight": "night",
+                    "scheduledInnings": 9,
+                    "reverseHomeAwayStatus": false,
+                    "inningBreakLength": 120,
+                    "gamesInSeries": 3,
+                    "seriesGameNumber": 1,
+                    "seriesDescription": "Regular Season",
+                    "recordSource": "S",
+                    "ifNecessary": "N",
+                    "ifNecessaryDescription": "Normal Game"
+                }
+            ],
+            "events": []
+        }
+    ]
+}
