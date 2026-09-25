@@ -17,26 +17,31 @@ Two-entree plate for $7 today (Mon Sep 21) with code DODGERSWIN —
 online and app orders only, while the offer lasts.
 ```
 
-No API keys, no dependencies — the MLB Stats API is open and ntfy topics are just
-strings you pick.
+A single .NET 10 console app with no NuGet dependencies — the MLB Stats API is open
+and ntfy topics are just strings you pick.
 
 ## Quick start
 
 1. Pick a topic name nobody will guess (`panda-plate-7f3a91` or similar) and
    subscribe to it in the ntfy [app](https://ntfy.sh/app) or on the web.
-2. Install and run:
+2. Build and run:
 
 ```bash
-pip install -e .
-export NTFY_TOPIC=panda-plate-7f3a91
-panda-plate-watch --dry-run
+dotnet run --project src/PandaPlateWatch -- --dry-run
 ```
 
-`--dry-run` prints what it would send. Point `--date` at a known Dodgers home win
-to see a real message:
+`--dry-run` prints what it would send and doesn't need a topic configured. Point
+`--date` at a known Dodgers home win to see a real message:
 
 ```bash
-panda-plate-watch --date 2026-09-20 --dry-run
+dotnet run --project src/PandaPlateWatch -- --date 2026-09-20 --dry-run
+```
+
+For actual use, publish a self-contained binary:
+
+```bash
+dotnet publish src/PandaPlateWatch -c Release -o ./app
+NTFY_TOPIC=panda-plate-7f3a91 ./app/panda-plate-watch
 ```
 
 ## Running it every day
@@ -48,7 +53,7 @@ Settings → Secrets and variables → Actions. The `check for the deal` workflo
 daily at 15:00 UTC (8am PDT / 7am PST), after even the latest West Coast game has
 gone final. Run it by hand from the Actions tab to test.
 
-Optional repository *variables*: `NTFY_SERVER`, `NTFY_PRIORITY`,
+Optional repository *variables*: `NTFY_SERVER`, `NTFY_PRIORITY`, `NTFY_TAGS`,
 `PANDA_DEAL_PRICE`, `PANDA_PROMO_CODE`. Optional secret: `NTFY_TOKEN`.
 
 The workflow caches `.state.json` between runs, so a manual re-run on a day it has
@@ -72,11 +77,14 @@ already alerted stays quiet.
 | `PANDA_DEAL_PRICE` | `$7` | Price shown in the message |
 | `PANDA_PROMO_CODE` | `DODGERSWIN` | Promo code shown in the message |
 
-Flags: `--date YYYY-MM-DD`, `--dry-run`, `--state-file PATH`, `--quiet`.
+A variable that is set but empty counts as unset, since that is how GitHub Actions
+passes an undefined repository variable into a step.
+
+Flags: `--date YYYY-MM-DD`, `--dry-run`, `--state-file PATH`, `--quiet`, `--help`.
 
 Exit code is `0` whether or not there's a deal, and `1` only on a real failure
-(unreachable API, bad config, ntfy rejected the publish), so a cron wrapper can
-treat non-zero as something worth looking at.
+(unreachable API, bad config, bad arguments, ntfy rejected the publish), so a cron
+wrapper can treat non-zero as something worth looking at.
 
 ## Caveats
 
@@ -93,13 +101,24 @@ fine, hammering it is not.
 ## Development
 
 ```bash
-pip install -e ".[dev]"
-pytest -q
+dotnet test
 ```
 
-Tests run against recorded API payloads in `tests/fixtures/` — real responses for a
-home win, a home loss, a road win and an off day — so the suite never touches the
-network.
+73 tests, run on Linux, Windows and macOS in CI. They exercise recorded API
+payloads in `tests/PandaPlateWatch.Tests/Fixtures/` — real responses for a home
+win, a home loss, a road win and an off day — and a stub `HttpMessageHandler`, so
+the suite never touches the network.
+
+Layout:
+
+| Path | What it does |
+| --- | --- |
+| `Mlb/Dodgers.cs` | the home-win rules (venue, game type, final, winner) |
+| `Mlb/MlbScheduleClient.cs` | one-day schedule fetch |
+| `Ntfy/NtfyPublisher.cs` | publishes to ntfy's JSON endpoint |
+| `DealChecker.cs` | orchestration, message text, Pacific-day logic |
+| `StateStore.cs` | duplicate suppression |
+| `CommandLineOptions.cs` | argument parsing |
 
 ## License
 

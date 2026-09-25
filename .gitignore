@@ -1,11 +1,14 @@
-__pycache__/
-*.py[cod]
-.venv/
-venv/
-*.egg-info/
-build/
-dist/
-.pytest_cache/
+bin/
+obj/
+.vs/
+.idea/
+*.user
+*.suo
+artifacts/
+TestResults/
+app/
+
+# Local run state — the deal days we've already alerted on.
 .state.json
 state.json
 .env

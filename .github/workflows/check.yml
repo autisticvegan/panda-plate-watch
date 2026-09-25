@@ -24,9 +24,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-dotnet@v4
         with:
-          python-version: "3.12"
+          dotnet-version: "10.0.x"
 
       # Survives between runs so a manual re-run doesn't double-notify.
       - uses: actions/cache@v4
@@ -35,7 +35,7 @@ jobs:
           key: panda-state-${{ github.run_id }}
           restore-keys: panda-state-
 
-      - run: pip install .
+      - run: dotnet publish src/PandaPlateWatch -c Release -o ./app
 
       - name: check yesterday's game
         env:
@@ -43,10 +43,9 @@ jobs:
           NTFY_TOKEN: ${{ secrets.NTFY_TOKEN }}
           NTFY_SERVER: ${{ vars.NTFY_SERVER }}
           NTFY_PRIORITY: ${{ vars.NTFY_PRIORITY }}
+          NTFY_TAGS: ${{ vars.NTFY_TAGS }}
           PANDA_DEAL_PRICE: ${{ vars.PANDA_DEAL_PRICE }}
           PANDA_PROMO_CODE: ${{ vars.PANDA_PROMO_CODE }}
-        run: |
-          panda-plate-watch \
-            --state-file .state.json \
-            ${{ inputs.date && format('--date {0}', inputs.date) || '' }} \
-            ${{ inputs.dry_run && '--dry-run' || '' }}
+          DATE_ARG: ${{ inputs.date && format('--date {0}', inputs.date) || '' }}
+          DRY_RUN_ARG: ${{ inputs.dry_run && '--dry-run' || '' }}
+        run: ./app/panda-plate-watch --state-file .state.json $DATE_ARG $DRY_RUN_ARG

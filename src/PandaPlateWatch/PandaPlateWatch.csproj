@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>PandaPlateWatch</RootNamespace>
+    <AssemblyName>panda-plate-watch</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="PandaPlateWatch.Tests" />
+  </ItemGroup>
+
+</Project>
