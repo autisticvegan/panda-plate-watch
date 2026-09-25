@@ -6,7 +6,11 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <InvariantGlobalization>true</InvariantGlobalization>
+    <!--
+      Deliberately NOT InvariantGlobalization: that drops ICU, and without ICU
+      Windows can't resolve the IANA id "America/Los_Angeles" that the whole
+      previous-Pacific-day calculation depends on.
+    -->
   </PropertyGroup>
 
 </Project>

@@ -22,14 +22,14 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: "10.0.x"
 
       # Survives between runs so a manual re-run doesn't double-notify.
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: .state.json
           key: panda-state-${{ github.run_id }}
