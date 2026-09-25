@@ -22,8 +22,15 @@ and ntfy topics are just strings you pick.
 
 ## Quick start
 
-1. Pick a topic name nobody will guess (`panda-plate-7f3a91` or similar) and
-   subscribe to it in the ntfy [app](https://ntfy.sh/app) or on the web.
+1. Generate a topic name nobody will guess, and subscribe to it in the ntfy
+   [app](https://ntfy.sh/app) or on the web. On plain ntfy.sh the topic name is the
+   only credential, so make it random rather than memorable — see
+   [Keeping your phone quiet](#keeping-your-phone-quiet).
+
+   ```bash
+   python3 -c "import secrets; print('panda-plate-' + secrets.token_hex(6))"
+   ```
+
 2. Build and run:
 
 ```bash
@@ -41,7 +48,7 @@ For actual use, publish a self-contained binary:
 
 ```bash
 dotnet publish src/PandaPlateWatch -c Release -o ./app
-NTFY_TOPIC=panda-plate-7f3a91 ./app/panda-plate-watch
+NTFY_TOPIC=<your-topic> ./app/panda-plate-watch
 ```
 
 ## Running it every day
@@ -62,7 +69,7 @@ already alerted stays quiet.
 ### cron on your own machine
 
 ```cron
-0 8 * * * NTFY_TOPIC=panda-plate-7f3a91 /usr/local/bin/panda-plate-watch --state-file ~/.panda-plate-watch.json --quiet
+0 8 * * * NTFY_TOPIC=<your-topic> /usr/local/bin/panda-plate-watch --state-file ~/.panda-plate-watch.json --quiet
 ```
 
 ## Configuration
@@ -85,6 +92,46 @@ Flags: `--date YYYY-MM-DD`, `--dry-run`, `--state-file PATH`, `--quiet`, `--help
 Exit code is `0` whether or not there's a deal, and `1` only on a real failure
 (unreachable API, bad config, bad arguments, ntfy rejected the publish), so a cron
 wrapper can treat non-zero as something worth looking at.
+
+## Keeping your phone quiet
+
+On plain ntfy.sh a topic has no owner: **anyone who knows the name can publish to
+it**, not just subscribe. The docs are blunt about this — "the topic is essentially
+a password." So the only thing standing between you and someone else's
+notifications is that they can't guess your topic. Three ways to do better, in
+increasing order of effort:
+
+**1. Keep the name secret and high-entropy.** Free, and enough for a lunch alert.
+Generate it with the `secrets.token_hex` line above, store it as a GitHub secret
+(not a repository *variable* — those are visible), and never paste it into an
+issue, a commit or a screenshot. An attacker has to guess ~48 bits.
+
+**2. Reserve the topic on ntfy.sh.** Requires a paid plan (Supporter, $5/month
+billed annually, includes 3 reserved topics). Reserving claims ownership of the
+name and lets you set what *everyone else* may do — set that to **Deny access**.
+Then generate an access token under Account → Access tokens and set it as the
+`NTFY_TOKEN` secret. Publishing now requires your token; strangers get a 403.
+
+**3. Self-host ntfy.** Free software, but you supply the host. In `server.yml`:
+
+```yaml
+auth-default-access: deny-all
+```
+
+then grant exactly one write-only publisher and one read-only reader:
+
+```bash
+ntfy user add pandabot
+ntfy access pandabot panda-plate write-only
+ntfy user add phone
+ntfy access phone panda-plate read-only
+```
+
+Point the app at it with `NTFY_SERVER=https://ntfy.example.com` and
+`NTFY_TOKEN=<pandabot's token>`. Nothing unauthenticated can publish or subscribe.
+
+Options 2 and 3 need no code changes — `NTFY_SERVER` and `NTFY_TOKEN` are already
+wired through.
 
 ## Caveats
 
